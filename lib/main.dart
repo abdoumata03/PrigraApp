@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:prigra_app/controllers/auth_controller.dart';
@@ -8,6 +9,17 @@ import 'package:prigra_app/screens/success.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main()  async {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+  ));
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
+
 
   // WidgetsFlutterBinding.ensureInitialized();
   //
