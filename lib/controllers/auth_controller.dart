@@ -8,14 +8,19 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:prigra_app/screens/signin.dart';
 import 'package:prigra_app/size_config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/home_page.dart';
+import '../screens/splash_screen2.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   var isLoading = false.obs;
-   void updateIsLoading(bool currentStatus) {
+
+
+
+  void updateIsLoading(bool currentStatus) {
     isLoading.value = currentStatus;
     update();
   }
@@ -40,7 +45,7 @@ class AuthController extends GetxController {
             ),
           ),
           messageText: const Text(
-            'Vous avez bien authentifié',
+            'Vous vous avez bien authentifié',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -54,8 +59,13 @@ class AuthController extends GetxController {
       // Login successful
       // You can navigate to another screen or handle the success in another way
       redirectToHomePage();
-      final boxLoggedIn =GetStorage();
-      boxLoggedIn.write('isLoggedIn', true);
+
+      // final boxLoggedIn =GetStorage();
+      // boxLoggedIn.write('isLoggedIn', true);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isLoggedIn', true);
+
+
 
 
 
@@ -92,8 +102,10 @@ class AuthController extends GetxController {
               color: Colors.white,
             ),
           ));
-      final boxLoggedIn =GetStorage();
-      boxLoggedIn.write('isLoggedIn', false);
+
+
+
+
     }
   }
   void redirectToHomePage() {
@@ -105,12 +117,7 @@ class AuthController extends GetxController {
     return token ?? '';
   }
 
-  Future<void> checkIfUserLoggedIn() async {
-    final token = await getToken();
-    if (token.isNotEmpty) {
-      redirectToHomePage();
-    } else {
-      Get.offAll(SigninScreen());
-    }
-  }
+
 }
+
+

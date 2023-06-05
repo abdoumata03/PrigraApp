@@ -15,6 +15,9 @@ dependencies:
   get_storage: ^2.1.1
   http: ^1.0.0
   shared_preferences: ^2.1.1
+  animated_text_kit:
+  page_transition:
+  animations:
 
 
 dev_dependencies:
