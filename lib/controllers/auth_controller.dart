@@ -6,14 +6,16 @@ import 'dart:convert';
 import 'package:get_storage/get_storage.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:prigra_app/screens/signin.dart';
 import 'package:prigra_app/size_config.dart';
+
+import '../screens/home_page.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   var isLoading = false.obs;
-
-  void updateIsLoading(bool currentStatus) {
+   void updateIsLoading(bool currentStatus) {
     isLoading.value = currentStatus;
     update();
   }
@@ -27,7 +29,7 @@ class AuthController extends GetxController {
     updateIsLoading(false);
 
     if (response.statusCode == 200) {
-      Get.snackbar("Succes", "Vous avez bien authentifié",
+      Get.snackbar("Succes", "Vous vous avez bien authentifié",
           backgroundColor: Colors.green,
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           titleText: const Text(
@@ -48,8 +50,14 @@ class AuthController extends GetxController {
       // Store the token in SharedPreferences
       final box = GetStorage();
       box.write('access', token);
+
       // Login successful
       // You can navigate to another screen or handle the success in another way
+      redirectToHomePage();
+      final boxLoggedIn =GetStorage();
+      boxLoggedIn.write('isLoggedIn', true);
+
+
 
       final accessToken = await getToken();
 
@@ -68,7 +76,7 @@ class AuthController extends GetxController {
         headers: {'Authorization': 'JWT $accessToken'},
       );
     } else {
-      Get.snackbar("Erreur", "Erreur lors l' 'authentification!",
+      Get.snackbar("Erreur", "Erreur lors de l'authentification!",
           backgroundColor: Colors.redAccent,
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           titleText: const Text(
@@ -79,17 +87,30 @@ class AuthController extends GetxController {
             ),
           ),
           messageText: const Text(
-            'Erreur lors l' 'authentification!',
+            "Erreur lors de l'authentification!",
             style: TextStyle(
               color: Colors.white,
             ),
           ));
+      final boxLoggedIn =GetStorage();
+      boxLoggedIn.write('isLoggedIn', false);
     }
   }
-
+  void redirectToHomePage() {
+    Get.offAll(HomePage());
+  }
   Future<String> getToken() async {
     final box = GetStorage();
     final String? token = box.read('access');
     return token ?? '';
+  }
+
+  Future<void> checkIfUserLoggedIn() async {
+    final token = await getToken();
+    if (token.isNotEmpty) {
+      redirectToHomePage();
+    } else {
+      Get.offAll(SigninScreen());
+    }
   }
 }
