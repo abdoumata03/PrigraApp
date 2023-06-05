@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:prigra_app/controllers/auth_controller.dart';
+import 'package:prigra_app/screens/first_page.dart';
+import 'package:prigra_app/screens/home_page.dart';
+import 'package:prigra_app/screens/profile_screen.dart';
    import 'package:prigra_app/screens/splash_screen2.dart';
  import 'package:prigra_app/size_config.dart';
 
@@ -46,10 +49,7 @@ class MainApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Ubuntu',
       ),
-
       home: MyCustomSplashScreen(),
-
-
     );
   }
 }

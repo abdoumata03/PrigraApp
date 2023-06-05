@@ -17,6 +17,8 @@ import '../screens/splash_screen2.dart';
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   var isLoading = false.obs;
+  Map<String, dynamic>? myDatareponsetype;
+    String?  meType;
 
 
 
@@ -51,11 +53,14 @@ class AuthController extends GetxController {
             ),
           ));
       final Map<String, dynamic> responseData = jsonDecode(response.body);
+      print('response data:  $responseData');
       final String token = responseData['access'];
       // Store the token in SharedPreferences
       final box = GetStorage();
       box.write('access', token);
 
+      SharedPreferences prefsToken = await SharedPreferences.getInstance();
+      prefsToken.setString('access', token) ;
       // Login successful
       // You can navigate to another screen or handle the success in another way
       redirectToHomePage();
@@ -77,14 +82,24 @@ class AuthController extends GetxController {
       );
 
       final Map meResponseBody = jsonDecode(meResponse.body);
+      print('me response Body: $meResponseBody');
 
-      final String meType = meResponseBody['type'];
+
+         meType = meResponseBody['type'] as String;
+      print('mon type est: $meType');
       final String meTypeId = meResponseBody['type_id'].toString();
 
       final myTypeResponse = await http.get(
         Uri.parse('https://prigra.onrender.com/base/$meType/$meTypeId/'),
         headers: {'Authorization': 'JWT $accessToken'},
       );
+     // final Map<String, dynamic> myDatareponsetype = jsonDecode(myTypeResponse.body) ?? '';
+      myDatareponsetype = jsonDecode(myTypeResponse.body) as Map<String, dynamic>?;
+
+
+
+
+update();
     } else {
       Get.snackbar("Erreur", "Erreur lors de l'authentification!",
           backgroundColor: Colors.redAccent,
@@ -102,9 +117,12 @@ class AuthController extends GetxController {
               color: Colors.white,
             ),
           ));
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isLoggedIn', true);
 
 
 
+      update();
 
     }
   }
@@ -112,8 +130,12 @@ class AuthController extends GetxController {
     Get.offAll(HomePage());
   }
   Future<String> getToken() async {
-    final box = GetStorage();
-    final String? token = box.read('access');
+
+    // final box = GetStorage();
+    // final String? token = box.read('access');
+
+    SharedPreferences prefsToken = await SharedPreferences.getInstance();
+    final String? token = prefsToken.getString('access') ?? '';
     return token ?? '';
   }
 

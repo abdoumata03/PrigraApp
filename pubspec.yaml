@@ -18,6 +18,7 @@ dependencies:
   animated_text_kit:
   page_transition:
   animations:
+  flutter_staggered_animations:
 
 
 dev_dependencies:

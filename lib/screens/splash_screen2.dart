@@ -66,7 +66,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
       if (isLoggedIn){
-        Get.to(HomePage());
+        Get.offAll(HomePage());
       }else
 
       {Get.to(SigninScreen());}
@@ -101,7 +101,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
                 duration: Duration(milliseconds: 1000),
                 opacity: _textOpacity,
                 child: Text(
-                  'Prigra...',
+                  'Bitwise...',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
