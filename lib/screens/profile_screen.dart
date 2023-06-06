@@ -68,7 +68,7 @@ class ProfilScreen extends StatelessWidget {
                   height: getHeight(100),
                   decoration: BoxDecoration(
                       color: kLightAccent,
-                      gradient: kGradient,
+                    //  gradient: kGradient,
                       borderRadius: BorderRadius.circular(20)),
                   child: Row(
                     // mainAxisAlignment: MainAxisAlignment.start,
@@ -114,12 +114,8 @@ class ProfilScreen extends StatelessWidget {
                   width: SizeConfig.screenWidth - getWidth(50),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    //color: Colors.red,
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Colors.white, kPrimaryAccent],
-                    ),
+                    color: kLightAccent,
+
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -182,12 +178,7 @@ class ProfilScreen extends StatelessWidget {
                     width: SizeConfig.screenWidth - getWidth(50),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      //color: Colors.red,
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [Colors.white, kPrimaryAccent],
-                      ),
+                      color:  kLightAccent
                     ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(

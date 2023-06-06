@@ -18,6 +18,7 @@ class AuthController extends GetxController {
   static AuthController instance = Get.find();
   var isLoading = false.obs;
   Map<String, dynamic>? myDatareponsetype;
+    List? ResponseAnnonces;
   String? meType;
 
   void updateIsLoading(bool currentStatus) {
@@ -142,7 +143,17 @@ class AuthController extends GetxController {
     myDatareponsetype =
         jsonDecode(myTypeResponse.body) as Map<String, dynamic>?;
 
+    final meResponseAnnonces = await http.get(
+        Uri.parse('https://prigra.onrender.com/annonces/annonces/'),
+        headers: {'Authorization': 'JWT $accessToken'},);
+       ResponseAnnonces = jsonDecode(meResponseAnnonces.body);
+
+    print(ResponseAnnonces);
+    print('length is: ${ResponseAnnonces?.length} ');
+
 
     update();
   }
+
+
 }

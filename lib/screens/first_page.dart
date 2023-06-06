@@ -36,57 +36,55 @@ class SlideAnimation3 extends StatelessWidget {
                 child: FadeInAnimation(
                   curve: Curves.fastLinearToSlowEaseIn,
                   duration: Duration(milliseconds: 2500),
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: _w / 20),
-                    height: _w / 4,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 40,
-                          spreadRadius: 10,
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding:
-                                EdgeInsets.symmetric(horizontal: getWidth(15)),
-                            child: SvgPicture.asset(
-                                'assets/icons/notification1.svg')),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Padding(
+                    padding:  EdgeInsets.symmetric(horizontal: getWidth(15)),
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: _w / 20),
+                      height: _w / 4,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 40,
+                            spreadRadius: 10,
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding:   EdgeInsets.symmetric(horizontal: getWidth(1)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              height: getHeight(15),
-                            ),
-                            Text(
-                              'ceci est un titre',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: getHeight(20)),
-                            ),
-                            SizedBox(
-                              height: getHeight(5),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'gfnggngfngfngfn',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 4,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: getHeight(15)),
-                              ),
+                            Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: getWidth(15)),
+                                child: SvgPicture.asset(
+                                    'assets/icons/notification1.svg')),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: getHeight(15),
+                                ),
+                                Text(
+                                  'ceci est un titre',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: getHeight(20)),
+                                ),
+                                SizedBox(
+                                  height: getHeight(5),
+                                ),
+                                Text('Ceci est une descr qu la base de donnees',style: TextStyle(fontSize: getHeight(15), fontWeight: FontWeight.w500),),
+
+                              ],
                             )
                           ],
-                        )
-                      ],
+                        ),
+                      ),
                     ),
                   ),
                 ),

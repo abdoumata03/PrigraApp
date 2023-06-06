@@ -1,8 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:prigra_app/controllers/auth_controller.dart';
+import 'package:prigra_app/screens/event.dart';
 import 'package:prigra_app/screens/first_page.dart';
 import 'package:prigra_app/screens/home_page.dart';
 import 'package:prigra_app/screens/profile_screen.dart';
@@ -10,6 +12,8 @@ import 'package:prigra_app/screens/profile_screen.dart';
  import 'package:prigra_app/size_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+import 'controllers/home_controller.dart';
 Future<void> main()   async {
    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -21,12 +25,18 @@ Future<void> main()   async {
     DeviceOrientation.portraitDown,
   ]);
 
+
+
+
    Get.put(AuthController());
+   Get.put(HomeController());
 
 
 
 
   runApp(const MainApp());
+
+
 
    SharedPreferences temail = await SharedPreferences.getInstance();
    final   emailS = temail.getString('email') ;
@@ -40,6 +50,8 @@ Future<void> main()   async {
    if (response.statusCode == 200) {
      print('data restored');
      AuthController.instance.fetchingData(response);
+
+
    }
 
 }
