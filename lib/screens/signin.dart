@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:prigra_app/components/scaffold_tree.dart';
 import 'package:prigra_app/constants.dart';
 import 'package:prigra_app/controllers/auth_controller.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prigra_app/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/field_builder.dart';
 import '../../components/svg_builder.dart';
 
@@ -73,11 +75,16 @@ class _SigninScreenState extends State<SigninScreen> {
                 ),
                 child: TextButton(
                   onPressed: () => {
-                    if (emailPassFormKey.currentState!.validate())
+
+                     if (emailPassFormKey.currentState!.validate())
                       {
-                        AuthController.instance.loginUser(
+
+
+                         AuthController.instance.loginUser(
                             mailController.text.trim(),
                             passwordController.text.trim()),
+
+
                       }
                   },
                   child: controller.isLoading.value

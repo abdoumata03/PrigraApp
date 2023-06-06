@@ -18,9 +18,7 @@ class AuthController extends GetxController {
   static AuthController instance = Get.find();
   var isLoading = false.obs;
   Map<String, dynamic>? myDatareponsetype;
-    String?  meType;
-
-
+  String? meType;
 
   void updateIsLoading(bool currentStatus) {
     isLoading.value = currentStatus;
@@ -34,6 +32,8 @@ class AuthController extends GetxController {
       body: {'email': email, 'password': password},
     );
     updateIsLoading(false);
+
+
 
     if (response.statusCode == 200) {
       Get.snackbar("Succes", "Vous vous avez bien authentifié",
@@ -52,54 +52,18 @@ class AuthController extends GetxController {
               color: Colors.white,
             ),
           ));
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-      print('response data:  $responseData');
-      final String token = responseData['access'];
-      // Store the token in SharedPreferences
-      final box = GetStorage();
-      box.write('access', token);
+      SharedPreferences temail = await SharedPreferences.getInstance();
+      temail.setString('email',  email );
 
-      SharedPreferences prefsToken = await SharedPreferences.getInstance();
-      prefsToken.setString('access', token) ;
-      // Login successful
-      // You can navigate to another screen or handle the success in another way
+
+      SharedPreferences tpassword = await SharedPreferences.getInstance();
+      tpassword.setString('password',  password );
+      print('preferrences saved');
+
+      fetchingData(response);
+      print('before redirect');
       redirectToHomePage();
-
-      // final boxLoggedIn =GetStorage();
-      // boxLoggedIn.write('isLoggedIn', true);
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool('isLoggedIn', true);
-
-
-
-
-
-      final accessToken = await getToken();
-
-      final meResponse = await http.get(
-        Uri.parse('https://prigra.onrender.com/auth/users/me/'),
-        headers: {'Authorization': 'JWT $accessToken'},
-      );
-
-      final Map meResponseBody = jsonDecode(meResponse.body);
-      print('me response Body: $meResponseBody');
-
-
-         meType = meResponseBody['type'] as String;
-      print('mon type est: $meType');
-      final String meTypeId = meResponseBody['type_id'].toString();
-
-      final myTypeResponse = await http.get(
-        Uri.parse('https://prigra.onrender.com/base/$meType/$meTypeId/'),
-        headers: {'Authorization': 'JWT $accessToken'},
-      );
-     // final Map<String, dynamic> myDatareponsetype = jsonDecode(myTypeResponse.body) ?? '';
-      myDatareponsetype = jsonDecode(myTypeResponse.body) as Map<String, dynamic>?;
-
-
-
-
-update();
+      print('after redirect');
     } else {
       Get.snackbar("Erreur", "Erreur lors de l'authentification!",
           backgroundColor: Colors.redAccent,
@@ -119,18 +83,14 @@ update();
           ));
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('isLoggedIn', true);
-
-
-
-      update();
-
     }
   }
+
   void redirectToHomePage() {
     Get.offAll(HomePage());
   }
-  Future<String> getToken() async {
 
+  Future<String> getToken() async {
     // final box = GetStorage();
     // final String? token = box.read('access');
 
@@ -139,7 +99,50 @@ update();
     return token ?? '';
   }
 
+  fetchingData(response) async {
+    final Map<String, dynamic> responseData = jsonDecode(response.body);
+    print('response data:  $responseData');
+    final String token = responseData['access'];
+    // Store the token in SharedPreferences
+    final box = GetStorage();
+    box.write('access', token);
 
+    SharedPreferences prefsToken = await SharedPreferences.getInstance();
+    prefsToken.setString('access', token);
+    // Login successful
+    // You can navigate to another screen or handle the success in another way
+
+
+
+
+    // final boxLoggedIn =GetStorage();
+    // boxLoggedIn.write('isLoggedIn', true);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLoggedIn', true);
+
+    final accessToken = await getToken();
+
+    final meResponse = await http.get(
+      Uri.parse('https://prigra.onrender.com/auth/users/me/'),
+      headers: {'Authorization': 'JWT $accessToken'},
+    );
+
+    final Map meResponseBody = jsonDecode(meResponse.body);
+    print('me response Body: $meResponseBody');
+
+    meType = meResponseBody['type'] as String;
+    print('mon type est: $meType');
+    final String meTypeId = meResponseBody['type_id'].toString();
+
+    final myTypeResponse = await http.get(
+      Uri.parse('https://prigra.onrender.com/base/$meType/$meTypeId/'),
+      headers: {'Authorization': 'JWT $accessToken'},
+    );
+    // final Map<String, dynamic> myDatareponsetype = jsonDecode(myTypeResponse.body) ?? '';
+    myDatareponsetype =
+        jsonDecode(myTypeResponse.body) as Map<String, dynamic>?;
+
+
+    update();
+  }
 }
-
-

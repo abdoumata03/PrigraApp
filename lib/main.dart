@@ -8,8 +8,9 @@ import 'package:prigra_app/screens/home_page.dart';
 import 'package:prigra_app/screens/profile_screen.dart';
    import 'package:prigra_app/screens/splash_screen2.dart';
  import 'package:prigra_app/size_config.dart';
-
-void main()   {
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+Future<void> main()   async {
    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
@@ -20,10 +21,26 @@ void main()   {
     DeviceOrientation.portraitDown,
   ]);
 
-
-  runApp(const MainApp());
    Get.put(AuthController());
 
+
+
+
+  runApp(const MainApp());
+
+   SharedPreferences temail = await SharedPreferences.getInstance();
+   final   emailS = temail.getString('email') ;
+   SharedPreferences tpassword = await SharedPreferences.getInstance();
+   final   passwordS = tpassword.getString('password') ;
+
+   final response = await http.post(
+     Uri.parse('https://prigra.onrender.com/auth/jwt/create'),
+     body: {'email': emailS, 'password': passwordS},
+   );
+   if (response.statusCode == 200) {
+     print('data restored');
+     AuthController.instance.fetchingData(response);
+   }
 
 }
 
@@ -38,6 +55,7 @@ class MainApp extends StatelessWidget {
     //Get.put(AuthController());
 
     SizeConfig().init(context);
+
 
 
 
