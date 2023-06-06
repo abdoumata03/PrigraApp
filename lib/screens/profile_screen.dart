@@ -34,6 +34,8 @@ class ProfilScreen extends StatelessWidget {
                 SharedPreferences prefsToken =
                     await SharedPreferences.getInstance();
                 prefsToken.setString('access', '');
+
+                authController.notificationsList.clear();
                 Get.to(SigninScreen());
               },
               child: SvgPicture.asset(

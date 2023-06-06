@@ -14,6 +14,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import 'controllers/home_controller.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 Future<void> main()   async {
    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -27,7 +29,10 @@ Future<void> main()   async {
 
 
 
-
+   WidgetsFlutterBinding.ensureInitialized();
+   await Firebase.initializeApp(
+     options: DefaultFirebaseOptions.currentPlatform,
+   );
    Get.put(AuthController());
    Get.put(HomeController());
 
@@ -42,7 +47,7 @@ Future<void> main()   async {
    final   emailS = temail.getString('email') ;
    SharedPreferences tpassword = await SharedPreferences.getInstance();
    final   passwordS = tpassword.getString('password') ;
-
+   AuthController authController = Get.find();
    final response = await http.post(
      Uri.parse('https://prigra.onrender.com/auth/jwt/create'),
      body: {'email': emailS, 'password': passwordS},
@@ -50,6 +55,9 @@ Future<void> main()   async {
    if (response.statusCode == 200) {
      print('data restored');
      AuthController.instance.fetchingData(response);
+
+     dynamic myId = await authController.getMyId();
+       authController.me = myId.toString();
 
 
    }

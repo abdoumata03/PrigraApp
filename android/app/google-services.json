@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1006808462349",
+    "project_id": "prigra-b9d04",
+    "storage_bucket": "prigra-b9d04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006808462349:android:a429f406986bebadf49144",
+        "android_client_info": {
+          "package_name": "com.example.prigra_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1006808462349-kgukhhqfqfjrq68mhupc4qe9sif4v4br.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGPc7zVNpLWVihwVFyQ0OBsXEwyX-owVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1006808462349-kgukhhqfqfjrq68mhupc4qe9sif4v4br.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1006808462349-6dvau2usoja3goqs75fcl69i4cno31nm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.prigraApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

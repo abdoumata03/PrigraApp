@@ -66,7 +66,7 @@ class AnnonesPage extends StatelessWidget {
                           height: getHeight(19),
                         ),
                         Text(
-                          "Photo de Promotion -  Année Universitaire",
+                          "Photo de Promotion                            -  Année Universitaire",
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
